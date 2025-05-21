@@ -13,6 +13,6 @@ services:
   mosquitto:
     image: eclipse-mosquitto:2.0.21
     volumes:
-      - ../src/deployment/mosquitto/:/mosquitto/config/
+      - ../deployment/mosquitto/:/mosquitto/config/
     ports:
       - "1883:1883"

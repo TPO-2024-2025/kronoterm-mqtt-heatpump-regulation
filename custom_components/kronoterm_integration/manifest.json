@@ -1,0 +1,20 @@
+{
+  "domain": "kronoterm_integration",
+  "name": "Kronoterm integration",
+  "dependencies": [
+    "mqtt"
+  ],
+  "codeowners": [
+    "@TPO-2024-2025/teams/01-skupina"
+  ],
+  "config_flow": true,
+  "documentation": "https://github.com/TPO-2024-2025/Projekt-01",
+  "iot_class": "local_push",
+  "issue_tracker": "https://github.com/TPO-2024-2025/Projekt-01/issues",
+  "version": "0.1.0",
+  "platforms": [
+    "sensor",
+    "number",
+    "switch"
+  ]
+}

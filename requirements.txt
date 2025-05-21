@@ -1,0 +1,9 @@
+colorlog==6.9.0
+homeassistant==2025.2.4
+pip>=21.3.1
+ruff==0.11.2
+pymodbus==3.8.6
+kronoterm_cloud_api==0.1.15
+paho-mqtt==1.6.1
+tuya-device-sharing-sdk==0.2.1
+pytest-homeassistant-custom-component==0.13.214

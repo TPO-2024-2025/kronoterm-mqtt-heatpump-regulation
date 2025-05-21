@@ -1,0 +1,3 @@
+refresh_sensors:
+  name: Refresh Sensors
+  description: Refresh the list of available sensors from Home Assistant.

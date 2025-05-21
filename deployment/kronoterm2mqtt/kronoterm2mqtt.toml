@@ -1,0 +1,73 @@
+# KRONOTERM -> MQTT - settings
+#
+# See README for more information.
+#
+# At least you should specify MQTT settings to connect to the
+# Mosquito server.
+
+[mqtt]
+# Credentials to MQTT server that should be used.
+#
+# The `main_uid` is used as a second prefix for all MQTT messages, to avoid conflicts.
+#
+# With `publish_config_throttle_seconds` you can set the throttle interval
+# for publishing config messages to Home Assistant.
+host = "mosquitto"
+port = 1883
+user_name = ""
+password = ""
+main_uid = "kronoterm"
+publish_config_throttle_seconds = 20
+
+[systemd]
+# Information for systemd helper functions.
+template_path = "/kronoterm2mqtt/.venv-app/lib/python3.11/site-packages/cli_base/systemd/service_template.txt"
+systemd_base_path = "/etc/systemd/system"
+service_slug = "kronoterm2mqtt"
+service_file_path = "/etc/systemd/system/kronoterm2mqtt.service"
+
+[systemd.template_context]
+# Context values for the systemd service file content.
+verbose_service_name = "kronoterm2mqtt"
+user = "root"
+group = "root"
+work_dir = "/kronoterm2mqtt"
+exec_start = "/kronoterm2mqtt/.venv-app/bin/kronoterm2mqtt_app publish-loop"
+syslog_identifier = "kronoterm2mqtt"
+
+[heat_pump]
+# The "definitions_name" is the prefix of "kronoterm2mqtt/definitions/*.toml" files!
+definitions_name = "kronoterm_ksm"
+device_name = "Heat Pump"
+model = "ETERA"
+port = "/dev/ttyUSB0"
+timeout = 0.5
+
+[custom_expander]
+# Custom IO Expander with DS18S20 1-wire thermometers
+# for controlling additional loops and solar pumps
+# See CustomEteraExpander class for more info.
+module_enabled = false
+uid = "etera_expander_module"
+name = "Custom ETERA Expander Module"
+model = "DIY"
+mqtt_payload_prefix = "expander"
+port = "/dev/ttyUSB1"
+port_speed = 115200
+timeout = 0.5
+number_of_thermometers = 10
+loop_operation = [1, 1, 1, 0]
+loop_sensors = [1, 0, 6, 5]
+loop_temperature = [25.0, 25.0, 25.0, 25.0]
+heating_curve_coefficient = 0.25
+solar_pump_operation = 1
+solar_pump_difference_on = 8.0
+solar_pump_difference_off = 3.0
+intra_tank_circulation_operation = true
+intra_tank_circulation_difference_on = 8.0
+intra_tank_circulation_difference_off = 5.0
+solar_sensors = [4, 3, 2, 8, 7]
+solar_pump_relay_id = 4
+inter_tank_pump_relay_id = 5
+sensor_names = ["Spalnice", "Mansarda", "Nadgaražje", "Pritličje", "Kolektorji", "Solarni zgoraj", "Solarni spodaj", "Bojler", "Cirkulacija"]
+relay_names = ["Črpalka spalnic", "Črpalka mansarde", "Črpalka nadgaražja", "", "Črpalka kolektorjev", "Cirkulacija med bojlerjema", "", ""]

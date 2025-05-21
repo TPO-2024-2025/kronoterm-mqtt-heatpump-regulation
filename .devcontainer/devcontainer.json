@@ -4,7 +4,7 @@
     "service": "hass",
     "workspaceFolder": "/workspace",
     "shutdownAction": "stopCompose",
-    "postCreateCommand": "/bin/sh /workspace/src/scripts/setup",
+    "postCreateCommand": "/bin/sh /workspace/scripts/setup",
     "forwardPorts": [
         8123
     ],
