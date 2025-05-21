@@ -24,7 +24,7 @@
 #    See the documentation for each action used below for the recommended IAM policies for this IAM user,
 #    and best practices on handling the access key credentials.
 
-name: Deploy to Amazon ECS
+name: Deploy to Amazon Lightsail
 
 on:
   push:
@@ -60,6 +60,11 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+    
+    - name: Install lightsailctl
+      run: |
+        sudo curl "https://s3.${{ env.AWS_REGION }}.amazonaws.com/lightsailctl/latest/linux-amd64/lightsailctl" -o "/usr/local/bin/lightsailctl"
+        sudo chmod +x /usr/local/bin/lightsailctl
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
