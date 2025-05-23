@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 from aiohttp.web_response import Response
 from homeassistant.components.http import HomeAssistantView
@@ -27,7 +27,7 @@ class SensorHistoryView(HomeAssistantView):
         except ValueError:
             return self.json_message("Invalid 'hours' parameter", status_code=400)
 
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         start_time = now - timedelta(hours=hours)
 
         instance = get_instance(self.hass)
