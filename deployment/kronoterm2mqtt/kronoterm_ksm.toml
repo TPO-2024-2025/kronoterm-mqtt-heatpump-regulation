@@ -231,6 +231,61 @@ state_class = "measurement"
 unit_of_measurement = ""
 scale = 0.01
 
+[[sensor]]
+name = "Loop 1 heat curve lower point"
+register = 2309
+device_class = "temperature"
+state_class = "measurement"
+unit_of_measurement = "°C"
+scale = 0.1
+
+[[sensor]]
+name = "Loop 1 heat curve upper point"
+register = 2314
+device_class = "temperature"
+state_class = "measurement"
+unit_of_measurement = "°C"
+scale = 0.1
+
+[[sensor]]
+name = "Loop 2 heat curve lower point"
+register = 2310
+device_class = "temperature"
+state_class = "measurement"
+unit_of_measurement = "°C"
+scale = 0.1
+
+[[sensor]]
+name = "Loop 2 heat curve upper point"
+register = 2315
+device_class = "temperature"
+state_class = "measurement"
+unit_of_measurement = "°C"
+scale = 0.1
+
+[[sensor]]
+name = "Set Desired HW temperature"
+register = 2023
+device_class = "temperature"
+state_class = "measurement"
+unit_of_measurement = "°C"
+scale = 0.1
+
+[[sensor]]
+name = "Loop 1 desired temperature"
+register = 2128
+device_class = "temperature"
+state_class = "measurement"
+unit_of_measurement = "°C"
+scale = 0.1
+
+[[sensor]]
+name = "Loop 2 desired temperature"
+register = 2188
+device_class = "temperature"
+state_class = "measurement"
+unit_of_measurement = "°C"
+scale = 0.1
 
 [[enum_sensor]]
 register = 2001
@@ -246,89 +301,6 @@ name = "Error/warning status"
 keys = [0, 1, 2]
 values = ["no error", "opozorilo", "error", "notification"]
 
-[[enum_sensor]]
-register = 2007
-name = "Operation regime"
-[[enum_sensor.options]]
-keys = [0, 1, 2]
-values = ["cooling", "heating", "heating and cooling off"]
-
-[[enum_sensor]]
-register = 2044
-name = "Loop 1 operation status on schedule"
-[[enum_sensor.options]]
-keys = [0, 1, 2, 3]
-values = ["off", "normal", "ECO", "COM"]
-
-[[binary_sensor]]
-register = 2000
-name = "System operation"
-device_class = ""
-
-[[binary_sensor]]
-register = 2045
-name = "Loop 1 circulation pump status"
-device_class = "running"
-
-[[binary_sensor]]
-register = 2055
-name = "Loop 2 circulation pump status"
-device_class = "running"
-
-[[binary_sensor]]
-register = 2002
-name = "Activation of additional source"
-device_class = "power"
-bit = 0
-
-[[binary_sensor]]
-register = 2002
-name = "Aditional source 1 is active"
-device_class = "running"
-bit = 4
-
-[[binary_sensor]]
-register = 2028
-name = "DHW circulation pump"
-device_class = "running"
-bit = 0
-
-[[binary_sensor]]
-register = 2028
-name = "Circulation Pump for DHW tank"
-device_class = "running"
-bit = 1
-
-
-# 4. iteration
-#[[switch]]
-#name = "DHW circulation switch"
-#
-#[[switch]]
-#name = "Additional source switch"
-#
-#[[number]]
-#name = "dummy number 1"
-#min = 35.0
-#max = 65.0
-#step = 0.5
-#unit_of_measurement = "°C"
-#
-#[[number]]
-#name = "Super ultra dummy number"
-#min = 0.0
-#max = 20.0
-#step = 1.0
-#unit_of_measurement = "min"
-
-[[binary_sensor]]
-register = 2113
-name = "Error active"
-device_class = ""
-
-[[switch]]
-name = "Error reset"
-register = 2113
 
 [[enum_sensor]]
 register = 2114
@@ -619,3 +591,57 @@ values = [
 	"High superheat x times/day",
 	"Envelope Tc high x tiems/day",
 	"Envelope Te low x times/day"]
+
+[[enum_sensor]]
+register = 2007
+name = "Operation regime"
+[[enum_sensor.options]]
+keys = [0, 1, 2]
+values = ["cooling", "heating", "heating and cooling off"]
+
+[[enum_sensor]]
+register = 2044
+name = "Loop 1 operation status on schedule"
+[[enum_sensor.options]]
+keys = [0, 1, 2, 3]
+values = ["off", "normal", "ECO", "COM"]
+
+[[binary_sensor]]
+register = 2000
+name = "System operation"
+device_class = ""
+
+[[binary_sensor]]
+register = 2045
+name = "Loop 1 circulation pump status"
+device_class = "running"
+
+[[binary_sensor]]
+register = 2055
+name = "Loop 2 circulation pump status"
+device_class = "running"
+
+[[binary_sensor]]
+register = 2002
+name = "Activation of additional source"
+device_class = "power"
+bit = 0
+
+[[binary_sensor]]
+register = 2002
+name = "Aditional source 1 is active"
+device_class = "running"
+bit = 4
+
+[[binary_sensor]]
+register = 2028
+name = "DHW circulation pump"
+device_class = "running"
+bit = 0
+
+[[binary_sensor]]
+register = 2028
+name = "Circulation Pump for DHW tank"
+device_class = "running"
+bit = 1
+

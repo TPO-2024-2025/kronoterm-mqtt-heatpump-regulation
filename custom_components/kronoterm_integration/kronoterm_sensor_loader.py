@@ -99,7 +99,7 @@ class KronotermSensorLoader:
     def _load_numbers(self, config):
         for entry in config.get("number", []):
             name = entry["name"]
-            topic = f"homeassistant/number/kronoterm/kronoterm-{self._slugify(name)}/command"
+            topic = f"homeassistant/sensor/kronoterm/kronoterm-{self._slugify(name)}/command"
 
             min_value = float(entry.get("min", 0))
             max_value = float(entry.get("max", 100))

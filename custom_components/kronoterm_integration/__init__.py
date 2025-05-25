@@ -115,8 +115,9 @@ async def async_setup_entry(
             blueprint_path.mkdir(parents=True, exist_ok=True)
 
             blueprint_file = blueprint_path / "error_notification_blueprint.yaml"
-            with open(blueprint_file, "w", encoding="utf-8") as f:
-                yaml.dump(blueprint, f, allow_unicode=True, sort_keys=False)
+            await hass.async_add_executor_job(
+                write_blueprint, blueprint_file, blueprint
+            )
 
             from homeassistant.components.http import StaticPathConfig
 
@@ -136,3 +137,8 @@ async def async_setup_entry(
     else:
         _LOGGER.warning("No error_* sensors found; skipping blueprint generation.")
     return True
+
+
+def write_blueprint(blueprint_file, blueprint):
+    with open(blueprint_file, "w", encoding="utf-8") as f:
+        yaml.dump(blueprint, f, allow_unicode=True, sort_keys=False)

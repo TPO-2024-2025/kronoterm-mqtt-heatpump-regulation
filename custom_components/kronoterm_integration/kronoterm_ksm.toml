@@ -11,9 +11,18 @@ stopbits = 1
 
 # https://developers.home-assistant.io/docs/core/entity/sensor
 
+
 [[sensor]]
-register = 2023
-name = "Desired DHW temperature"
+name = "Loop 1 desired temperature"
+register = 2128
+device_class = "temperature"
+state_class = "measurement"
+unit_of_measurement = "°C"
+scale = 0.1
+
+[[sensor]]
+name = "Loop 2 desired temperature"
+register = 2188
 device_class = "temperature"
 state_class = "measurement"
 unit_of_measurement = "°C"
@@ -130,8 +139,6 @@ device_class = "power"
 state_class = "measurement"
 unit_of_measurement = "W"
 scale = 1.0
-
-
 
 [[sensor]]
 register = 2130
@@ -291,7 +298,7 @@ bit = 4
 register = 2028
 name = "DHW circulation pump"
 device_class = "running"
-bit = 0
+bit = 1
 
 [[binary_sensor]]
 register = 2028
@@ -299,34 +306,10 @@ name = "Circulation Pump for DHW tank"
 device_class = "running"
 bit = 1
 
-[[switch]]
-name = "DHW circulation switch"
-
-[[switch]]
-name = "Additional source switch"
-
-[[number]]
-name = "dummy number 1"
-min = 35.0
-max = 65.0
-step = 0.5
-unit_of_measurement = "°C"
-
-[[number]]
-name = "Super ultra dummy number"
-min = 0.0
-max = 20.0
-step = 1.0
-unit_of_measurement = "min"
-
 [[binary_sensor]]
 register = 2113
 name = "Error active"
 device_class = ""
-
-[[switch]]
-name = "Error reset"
-register = 2113
 
 [[enum_sensor]]
 register = 2114
@@ -617,3 +600,68 @@ values = [
 	"High superheat x times/day",
 	"Envelope Tc high x tiems/day",
 	"Envelope Te low x times/day"]
+
+[[switch]]
+name = "Additional source switch"
+register = 2015
+
+[[switch]]
+name = "Error reset"
+register = 2113
+
+[[switch]]
+name = "Loop 1 adaptive curve"
+register = 2319
+
+[[switch]]
+name = "Loop 2 adaptive curve"
+register = 2320
+
+[[switch]]
+name = "Home water switch"
+register = 2025
+
+[[number]]
+name = "Loop 1 heat curve lower point"
+register = 2309
+min = 25.0
+max = 50.0
+step = 0.5
+unit_of_measurement = "°C"
+scale = 0.1
+
+[[number]]
+name = "Loop 1 heat curve upper point"
+register = 2314
+min = 25.0
+max = 50.0
+step = 0.5
+unit_of_measurement = "°C"
+scale = 0.1
+
+[[number]]
+name = "Loop 2 heat curve lower point"
+register = 2310
+min = 25.0
+max = 50.0
+step = 0.5
+unit_of_measurement = "°C"
+scale = 0.1
+
+[[number]]
+name = "Loop 2 heat curve upper point"
+register = 2315
+min = 25.0
+max = 50.0
+step = 0.5
+unit_of_measurement = "°C"
+scale = 0.1
+
+[[number]]
+name = "Set Desired HW temperature"
+register = 2023
+min = 25.0
+max = 50.0
+step = 0.5
+unit_of_measurement = "°C"
+scale = 0.1

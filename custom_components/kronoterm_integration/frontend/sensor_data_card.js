@@ -266,89 +266,119 @@ class SensorDataCard extends HTMLElement {
         console.log("areas", areas)
 
         this.shadowRoot.innerHTML = `
-      <style>
-        select, button {
-          margin-bottom: 10px;
-          font-size: 14px;
-          padding: 6px;
-        }
-        .container {
-          padding: 16px;
-        }
-        dialog::backdrop {
-          background-color: rgba(0, 0, 0, 0.5);
-        }
-        #graph-container {
-          margin-bottom: 10px;
-        }
-        dialog {
-          border: none;
-          border-radius: 8px;
-          padding: 0;
-          overflow: visible;
-        }
-        ha-select, ha-textfield {
-          width: 100%;
-          margin-top: 10px;
-          margin-bottom: 10px;
-        }
-      </style>
-      <div class="container">
-        <label for="area-select">Area:</label>
-        <ha-select id="area-select" label="Area"></ha-select>
-
-        <label for="sensor-select">Sensor:</label>
-        <ha-select id="sensor-select" label="Sensor"></ha-select>
-
-        <div id="graph-container"></div>
-
-        <mwc-button id="refresh-btn" raised><ha-icon icon="mdi:reload" style="--mdc-icon-size: 20px; margin-right: 10px;"></ha-icon>Refresh Sensors</mwc-button>
-        <mwc-button id="settings-btn" raised><ha-icon icon="mdi:cog" style="--mdc-icon-size: 20px; margin-right: 10px;"></ha-icon>Settings</mwc-button>
-        <mwc-button id="export-csv-btn" raised>
-            <ha-icon icon="mdi:download" style="--mdc-icon-size: 20px; margin-right: 10px;"></ha-icon>
-            Export CSV
-        </mwc-button>
-      </div>
-
-      <dialog id="settings-dialog">
-        <ha-card header="Sensor Settings">
-          <div class="card-content">
-            <div style="display: flex; align-items: center; margin-bottom: 30px;">
-                <ha-switch id="hide-unavailable-toggle"></ha-switch>
-                <span style="margin-left: 8px;">Hide Unavailable Sensors</span>
+        <ha-card>
+            <div class="card-header-flex">
+                <span class="card-title">Sensors Overview</span>
+                <mwc-icon-button id="settings-btn" title="Settings">
+                <ha-icon icon="mdi:cog"></ha-icon>
+                </mwc-icon-button>
             </div>
+            <div class="container">
+                <style>
+                    .card-header-flex {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        padding: 12px 16px 0 16px;
+                        font-size: 1.2em;
+                        font-weight: bold;
+                    }
+                    .card-title {
+                    flex: 1 1 auto;
+                    }
+                    mwc-icon-button[icon="mdi:cog"], mwc-icon-button#settings-btn {
+                    --mdc-icon-size: 24px;
+                    color: var(--secondary-text-color, #888);
+                    }
+                    select, button {
+                    margin-bottom: 10px;
+                    font-size: 14px;
+                    padding: 6px;
+                    }
+                    .container {
+                    padding: 16px;
+                    }
+                    dialog::backdrop {
+                    background-color: rgba(0, 0, 0, 0.5);
+                    }
+                    #graph-container {
+                    margin: 20px 0 10px 0;
+                    }
+                    dialog {
+                    border: none;
+                    border-radius: 8px;
+                    padding: 0;
+                    overflow: visible;
+                    }
+                    ha-select, ha-textfield {
+                    width: 100%;
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                    }
+                    .subsection-header {
+                        font-size: 1rem;
+                        font-weight: 600;
+                        color: var(--secondary-text-color, #666);
+                        margin-bottom: 0px;
+                        margin-top: 2px;
+                        letter-spacing: 0.03em;
+                        }
+                </style>
+                <div>
+                    <div class="subsection-header">Area</div>
+                    <ha-select id="area-select" label="Area"></ha-select>
 
-            <label for="update-interval-input">Global sensor value refresh:</label>
-            <ha-textfield
-              label="Update Interval (seconds)"
-              id="update-interval-input"
-              type="number"
-              min="1"
-              style="margin-bottom: 30px;"
-            ></ha-textfield>
+                    <div class="subsection-header">Sensor</div>
+                    <ha-select id="sensor-select" label="Sensor"></ha-select>
 
-            <label for="sensor-select-settings">Select sensor to set timeout:</label>
-            <ha-select label="Sensor" id="sensor-select-settings">
-              <mwc-list-item value=""></mwc-list-item>
-              ${this.sensors.map(sensor => `
-                <mwc-list-item value="${sensor.id}">${sensor.id}</mwc-list-item>
-              `).join("")}
-            </ha-select>
+                    <div id="graph-container"></div>
 
-            <label for="dead-timeout-input">Dead timeout for selected sensor (global if not selected):</label>
-            <ha-textfield
-              label="Dead Timeout (seconds)"
-              id="dead-timeout-input"
-              type="number"
-              min="1"
-            ></ha-textfield>
+                    <mwc-button id="refresh-btn" outlined><ha-icon icon="mdi:reload" style="--mdc-icon-size: 20px; margin-right: 10px;"></ha-icon>Refresh</mwc-button>
+                    <mwc-button id="export-csv-btn" outlined>
+                        <ha-icon icon="mdi:download" style="--mdc-icon-size: 20px; margin-right: 10px;"></ha-icon>
+                        Export CSV
+                    </mwc-button>
+                </div>
+                <dialog id="settings-dialog">
+                    <ha-card header="Sensor Settings">
+                    <div class="card-content">
+                        <div style="display: flex; align-items: center; margin-bottom: 30px;">
+                            <ha-switch id="hide-unavailable-toggle"></ha-switch>
+                            <span style="margin-left: 8px;">Hide Unavailable Sensors</span>
+                        </div>
 
-            <mwc-button id="save-settings-btn" raised>Save</mwc-button>
-            <mwc-button id="close-settings-btn" outlined>Close</mwc-button>
-          </div>
-        </ha-card>
-      </dialog>
-    `;
+                        <label for="update-interval-input">Global sensor value refresh:</label>
+                        <ha-textfield
+                        label="Update Interval (seconds)"
+                        id="update-interval-input"
+                        type="number"
+                        min="1"
+                        style="margin-bottom: 30px;"
+                        ></ha-textfield>
+
+                        <label for="sensor-select-settings">Select sensor to set timeout:</label>
+                        <ha-select label="Sensor" id="sensor-select-settings">
+                        <mwc-list-item value=""></mwc-list-item>
+                        ${this.sensors.map(sensor => `
+                            <mwc-list-item value="${sensor.id}">${sensor.id}</mwc-list-item>
+                        `).join("")}
+                        </ha-select>
+
+                        <label for="dead-timeout-input">Dead timeout for selected sensor (global if not selected):</label>
+                        <ha-textfield
+                        label="Dead Timeout (seconds)"
+                        id="dead-timeout-input"
+                        type="number"
+                        min="1"
+                        ></ha-textfield>
+
+                        <mwc-button id="save-settings-btn" raised>Save</mwc-button>
+                        <mwc-button id="close-settings-btn" outlined>Close</mwc-button>
+                    </div>
+                    </ha-card>
+                </dialog>
+            </ha-card>
+            `;
 
         this.shadowRoot.getElementById("sensor-select")?.addEventListener("change", (e) => this.handleChange(e));
         this.shadowRoot.getElementById("area-select")?.addEventListener("change", (e) => {
